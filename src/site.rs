@@ -54,8 +54,9 @@ async fn get_site(res: Response) -> anyhow::Result<Site> {
 }
 
 impl Client<Authenticated> {
-    pub async fn get_site(&self, username: &str) -> anyhow::Result<Site> {
-        let res = self.get(format!("/site/info/{username}")).await?;
+    pub async fn get_site(&self, username: Option<&str>) -> anyhow::Result<Site> {
+        let path = username.map(|s| format!("/{s}")).unwrap_or_default();
+        let res = self.get(format!("/site/info{path}")).await?;
         get_site(res).await
     }
 }

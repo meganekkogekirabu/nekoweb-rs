@@ -86,20 +86,11 @@ impl Client<Authenticated> {
             .error_for_status()?)
     }
 
-    async fn get_auth(&self, path: impl Into<String>) -> anyhow::Result<Response> {
-        Ok(self
-            .http
-            .get(format!("{}{}", &self.base_url, path.into()))
-            .header(AUTHORIZATION, &self.state.token)
-            .send()
-            .await?
-            .error_for_status()?)
-    }
-
     async fn get(&self, path: impl Into<String>) -> anyhow::Result<Response> {
         Ok(self
             .http
             .get(format!("{}{}", &self.base_url, path.into()))
+            .header(AUTHORIZATION, &self.state.token)
             .send()
             .await?
             .error_for_status()?)

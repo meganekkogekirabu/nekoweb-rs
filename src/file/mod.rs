@@ -130,7 +130,7 @@ impl Client<Authenticated> {
 
     pub async fn list(&self, pathname: &str) -> anyhow::Result<Vec<File>> {
         let res = self
-            .get_auth(format!(
+            .get(format!(
                 "/files/readfolder?{}",
                 serde_urlencoded::to_string(&HashMap::from([("pathname", &pathname)]))?
             ))
