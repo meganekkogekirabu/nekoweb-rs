@@ -22,7 +22,7 @@ use reqwest::{
     multipart::{Form, Part},
 };
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::{path::PathBuf, time::Duration};
 use tokio::io::AsyncRead;
 use tokio_stream::StreamExt;
 use tokio_util::io::ReaderStream;
@@ -89,6 +89,7 @@ impl<'a> BigFile<'a> {
             let mut chunk = Vec::new();
             chunk.extend_from_slice(&bytes?);
             self.append(chunk).await?;
+            tokio::time::sleep(Duration::from_secs(1)).await;
         }
 
         match after {
