@@ -33,7 +33,12 @@ struct CreateResponse {
 
 impl Client<Authenticated> {
     async fn create_big_file(&self) -> anyhow::Result<String> {
-        let res = self.post("/files/big/create", &"").await?;
+        let res = self
+            .http
+            .post("/files/big/create")
+            .send()
+            .await?
+            .error_for_status()?;
         let data = res.json::<CreateResponse>().await?;
         Ok(data.id)
     }
@@ -98,8 +103,11 @@ impl<'a> BigFile<'a> {
             AfterUpload::Import => {
                 let res = self
                     .client
-                    .post(format!("/files/import/{}", &self.id), &"")
-                    .await?;
+                    .http
+                    .post(format!("/files/import/{}", &self.id))
+                    .send()
+                    .await?
+                    .error_for_status()?;
 
                 Ok(res)
             }
