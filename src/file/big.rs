@@ -35,7 +35,7 @@ impl Client<Authenticated> {
     async fn create_big_file(&self) -> anyhow::Result<String> {
         let res = self
             .http
-            .post("/files/big/create")
+            .post(format!("{}/files/big/create", self.base_url))
             .send()
             .await?
             .error_for_status()?;
@@ -104,7 +104,7 @@ impl<'a> BigFile<'a> {
                 let res = self
                     .client
                     .http
-                    .post(format!("/files/import/{}", &self.id))
+                    .post(format!("{}/files/import/{}", self.client.base_url, self.id))
                     .send()
                     .await?
                     .error_for_status()?;
