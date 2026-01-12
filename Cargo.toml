@@ -1,0 +1,20 @@
+[package]
+name = "nekoweb-rs"
+description = "Rust bindings for the Nekoweb API"
+version = "0.1.0"
+edition = "2024"
+license = "GPL-3.0-or-later"
+keywords = ["nekoweb"]
+categories = ["api-bindings"]
+repository = "https://github.com/meganekkogekirabu/nekoweb-rs"
+readme = "README.md"
+
+[dependencies]
+anyhow = "1.0.100"
+dotenv = "0.15.0"
+reqwest = { version = "0.13.1", features = ["form", "json", "multipart"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_urlencoded = "0.7.1"
+tokio = { version = "1.49.0", features = ["full"] }
+tokio-stream = "0.1.18"
+tokio-util = { version = "0.7.18", features = ["futures-util", "io"] }
