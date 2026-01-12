@@ -18,6 +18,7 @@
 use crate::{Authenticated, Client};
 use reqwest::{
     Response,
+    header::AUTHORIZATION,
     multipart::{Form, Part},
 };
 use serde::{Deserialize, Serialize};
@@ -35,7 +36,8 @@ impl Client<Authenticated> {
     async fn create_big_file(&self) -> anyhow::Result<String> {
         let res = self
             .http
-            .post(format!("{}/files/big/create", self.base_url))
+            .get(format!("{}/files/big/create", self.base_url))
+            .header(AUTHORIZATION, &self.state.token)
             .send()
             .await?
             .error_for_status()?;
