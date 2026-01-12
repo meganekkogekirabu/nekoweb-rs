@@ -48,8 +48,8 @@ async fn get_site(res: Response) -> anyhow::Result<Site> {
         updates: data.updates,
         followers: data.followers,
         views: data.views,
-        created_at: UNIX_EPOCH + Duration::from_secs(data.created_at),
-        updated_at: UNIX_EPOCH + Duration::from_secs(data.updated_at),
+        created_at: UNIX_EPOCH + Duration::from_millis(data.created_at),
+        updated_at: UNIX_EPOCH + Duration::from_millis(data.updated_at),
     })
 }
 
