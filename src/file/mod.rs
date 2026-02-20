@@ -50,6 +50,20 @@ pub struct File {
     pub dir: bool,
 }
 
+#[derive(Debug, Clone, Deserialize)]
+pub struct Limit {
+    pub limit: i64;
+    pub remaining: i64;
+    pub reset: i64;
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Limits {
+    pub general: Limit;
+    pub big_uploads: Limit;
+    pub zip: Limit;
+}
+
 impl Client<Authenticated> {
     async fn create(&self, pathname: &str, isFolder: bool) -> anyhow::Result<Response> {
         let pathname = pathname.into();
@@ -63,6 +77,10 @@ impl Client<Authenticated> {
 
     pub async fn create_folder(&self, path: &str) -> anyhow::Result<Response> {
         Ok(self.create(path, true).await?)
+    }
+
+    pub async fn get_limits(&self) -> anyhow::Result<Limits> {
+        
     }
 
     pub async fn upload_file(
